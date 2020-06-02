@@ -1,31 +1,18 @@
+const path = require('path');
 module.exports = {
-  entry: {
-    app: "./src/index.js"
-  },
+  entry: path.join(__dirname, 'src/index.js'),
   output: {
-    path: __dirname + '/public/js',
-    filename: "[name].js"
+    path: path.join(__dirname, 'public'),
+    filename: "bundle.js"
   },
-  devServer: {
-    contentBase: __dirname + '/public',
-    port: 8080,
-    publicPath: '/js/'
-  },
-  devtool: "eval-source-map",
-  mode: "development",
+  devtool: "inline-source-map",
   module: {
     rules: [{
-      test: /\.js$/,
-      enforce: "pre",
-      exclude: /node_modules/,
-      loader: "eslint-loader"
-    }, {
-      test: /\.css$/,
-      loader: ["style-loader", "css-loader"]
-    }, {
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: "babel-loader"
+      test: /.js$/,
+      loader: "babel-loader",
+      options: {
+        presets: ['es2015', 'react']
+      }
     }]
   }
 };
